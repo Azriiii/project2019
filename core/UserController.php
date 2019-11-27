@@ -2,8 +2,6 @@
 
 
 include( 'phpMailer/PHPMailer.php' );
-    require_once "../config.php";
-
 
 class UserController {
 
@@ -34,7 +32,7 @@ class UserController {
 
 	function findUser( $email, $password ) {
 		$sql = "SELECT * from user where email='" . $email . "' and password='" . $password . "' LIMIT 1";
-		$db  = config::getConnexion();
+		$db  = Config::getConnection();
 		try {
 			$stmt = $db->prepare( $sql );
 			$stmt->execute();
@@ -61,7 +59,7 @@ class UserController {
 
 	function getUsersByRoles( $role ) {
 		$sql = "SElECT * From user where role = '" . $role . "'";
-		$db  = config::getConnexion();
+		$db  = Config::getConnection();
 		try {
 			$list = $db->query( $sql );
 			return $list;
@@ -73,7 +71,7 @@ class UserController {
 
 	function getUsers() {
 		$sql = "SElECT * From user";
-		$db  = config::getConnexion();
+		$db  = Config::getConnection();
 		try {
 			$list = $db->query( $sql );
 			return $list;
@@ -86,7 +84,7 @@ class UserController {
 	function updateUser( User $user ) {
 		$sql = "UPDATE user SET name=:name, surname=:surname,username=:username,
 		email=:email,number=:number, role=:role where id= :id ";
-		$db  = config::getConnexion();
+		$db  = Config::getConnection();
 		$req = $db->prepare( $sql );
 		try {
 			$req->bindValue( ':id', $user->getId() );
@@ -108,7 +106,7 @@ class UserController {
 
 	function findUserById( $id ) {
 		$sql = "SELECT * from user where id=" . $id . " LIMIT 1";
-		$db  = config::getConnexion();
+		$db  = Config::getConnection();
 		try {
 			$stmt = $db->prepare( $sql );
 			$stmt->execute();
@@ -133,7 +131,7 @@ class UserController {
 	}
 
 	function executeSql( $sql ) {
-		$db  = config::getConnexion();
+		$db  = Config::getConnection();
 		$req = null;
 		try {
 			$req = $db->prepare( $sql );
