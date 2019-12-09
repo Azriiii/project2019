@@ -123,6 +123,7 @@ try{
         }
 	}
 	function countCart($ADD_IP){
+		//NB ELEMENT PANIER
 		$sql="SELECT count(*)count from Panier where ADD_IP= '$ADD_IP'";
 		$db = config::getConnexion();
 		try{
