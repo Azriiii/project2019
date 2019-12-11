@@ -15,7 +15,7 @@ $user                      = Config::getUserSession();
 if ( $user == null || $user->getRole() != "admin" ) {
 	?>
     <script>
-        //window.location.replace("<?php echo curPageURL() . '/views/front' ?>");//
+      //  window.location.replace("<?php echo curPageURL() . '/views/front' ?>");
     </script>
 	<?php
 }

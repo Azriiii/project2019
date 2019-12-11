@@ -1,74 +1,63 @@
 <?php
-include dirname( __FILE__ ) . '/../baseFront.php';
+include dirname(__FILE__) . '/../baseFront.php';
 checkLoggedIn();
 $fidelities = $fidelityController->getFidelities();
-$user       = $userController->findUserById( Config::getUserSession()->getId() );
-$myfidelity   = $fidelityController->findFidelityById( $user->getFidelity() );
+$user       = $userController->findUserById(Config::getUserSession()->getId());
+$myfidelity   = $fidelityController->findFidelityById($user->getFidelity());
 ?>
-<?php startblock( 'content' ) ?>
-    <main class="app-conten container">
-        <div class="app-title mt-15">
-            <div>
-                <h4><i class="fa fa-th-list"></i> List of Fidelity Cards</h4>
-            </div>
+<?php startblock('content') ?>
+<main class="app-conten container">
+    <div class="app-title mt-15">
+        <div>
+            <h4><i class="fa fa-th-list"></i> List of Fidelity Cards</h4>
         </div>
-        <div class="container row">
-            <div class="p-3">
-				<?php
-				if ( $myfidelity != null ) {
-					echo 'You alread have a fidelity card';
-				}
-				?>
-            </div>
-            <div class="clearfix"></div>
-            <div class="col-md-12">
-                <div class="tile">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Code</th>
-                                <th>Value</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-							<?php
-							foreach ( $fidelities as $fidelity ) {
-								?>
-                                <tr>
-                                    <td> <?php echo $fidelity["id"] ?> </td>
-                                    <td> <?php echo $fidelity["name"] ?> </td>
-                                    <td> <?php echo $fidelity["code"] ?> </td>
-                                    <td> <?php echo $fidelity["value"] ?> %</td>
-									<?php
-									if ( $myfidelity == null ) {
-										?>
-                                        <td>
-                                            <form class="mr-2" style="float: left;" action="add.php" method="post">
-                                                <input type="hidden" value="<?PHP echo $fidelity['id']; ?>" name="id">
-                                                <input type="submit" class="btn btn-info" value="Request">
-                                            </form>
-                                        </td>
-										<?php
-									} else {
-										echo '<td></td>';
-									}
-									?>
-                                </tr>
-								<?php
-							}
-							?>
+    </div>
+    <div class="row">
+        <?php
 
-                            </tbody>
-                        </table>
-                    </div>
+        foreach ($fidelities as $fidelity) {
+
+            $background = "#f9f9f9";
+            if ($fidelity["value"] < 15) {
+                $background = "#f9f9f9";
+            } else if ($fidelity["value"] < 35) {
+                $background = "#ffc297";
+            } else {
+                $background = "#ffc800";
+            }
+
+            ?>
+            <div class="card col-md-4">
+                <div class="card-header text-center" style="background : <?php echo $background ?>">
+                    <?php echo $fidelity["name"] ?> Catd
+                </div>
+                <div class="card-body text-center">
+                    <img style="height: 203px;width: 280px;object-fit: contain;" src="../assets/bg-card.jpg" alt="">
+                    <p><strong><?php echo $fidelity["name"] ?></strong></p>
+                    <p> <?php echo $fidelity["code"] ?></p>
+                    <p> <?php echo $fidelity["value"] ?> % Discount</p>
+                    <?php
+                        if ($myfidelity == null) {
+                            ?>
+                        <td>
+                            <form class="text-center" action="add.php" method="post">
+                                <input type="hidden" value="<?PHP echo $fidelity['id']; ?>" name="id">
+                                <input type="submit" class="btn btn-secondary" value="Request">
+                            </form>
+                        </td>
+                    <?php
+                        } else {
+                            echo '<td></td>';
+                        }
+                        ?>
                 </div>
             </div>
-        </div>
-    </main>
+
+        <?php
+        }
+        ?>
+    </div>
+</main>
 
 
 <?php endblock() ?>

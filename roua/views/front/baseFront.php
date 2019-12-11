@@ -22,7 +22,7 @@ $fidelityRequestController = new FidelityRequestController();
 if ( $user = Config::getUserSession()!= null && $user = Config::getUserSession()->getRole() == "admin" ) {
 	?>
     <script>
-        window.location.replace("<?php echo curPageURL() . '/views/admin' ?>");
+       // window.location.replace("<?php echo curPageURL() . '/views/admin' ?>");//
     </script>
 	<?php
 }
