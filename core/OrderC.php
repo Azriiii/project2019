@@ -46,6 +46,7 @@ class OrderC {
         }	
 	}
 	function displayOrders(){
+		//metier par id client
 		$sql="SElECT * From Commande order by id_client";
 		$db = config::getConnexion();
 		try{
